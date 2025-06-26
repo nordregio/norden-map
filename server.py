@@ -29,27 +29,52 @@ df = df[
 ]
 
 
+# def assign_color(population):
+#     if population < 5:
+#         return [225, 237, 255, 255]  # #E1EDFF
+#     elif population < 15:
+#         return [211, 225, 255, 255]  # #D3E1FF
+#     elif population < 50:
+#         return [198, 212, 254, 255]  # #C6D4FE
+#     elif population < 100:
+#         return [185, 198, 252, 255]  # #B9C6FC
+#     elif population < 200:
+#         return [173, 182, 250, 255]  # #ADB6FA
+#     elif population < 1000:
+#         return [161, 165, 248, 255]  # #A1A5F8
+#     elif population < 4000:
+#         return [132, 139, 210, 255]  # #848BD2
+#     elif population < 6000:
+#         return [105, 112, 172, 255]  # #6970AC
+#     elif population < 10000:
+#         return [78, 86, 131, 255]  # #4E5683
+#     else:
+#         return [52, 59, 90, 255]  # #343B5A
+
+
 def assign_color(population):
     if population < 5:
-        return [225, 237, 255, 255]  # #E1EDFF
+        return [219, 231, 245, 255]  # #dbe7f5
     elif population < 15:
-        return [211, 225, 255, 255]  # #D3E1FF
+        return [192, 212, 233, 255]  # #c0d4e9
     elif population < 50:
-        return [198, 212, 254, 255]  # #C6D4FE
+        return [165, 191, 221, 255]  # #a5bfdd
     elif population < 100:
-        return [185, 198, 252, 255]  # #B9C6FC
+        return [138, 170, 209, 255]  # #8aaad1
     elif population < 200:
-        return [173, 182, 250, 255]  # #ADB6FA
+        return [111, 149, 197, 255]  # #6f95c5
     elif population < 1000:
-        return [161, 165, 248, 255]  # #A1A5F8
+        return [91, 130, 182, 255]   # #5b82b6
     elif population < 4000:
-        return [132, 139, 210, 255]  # #848BD2
+        return [72, 111, 166, 255]   # #486fa6
     elif population < 6000:
-        return [105, 112, 172, 255]  # #6970AC
+        return [59, 94, 144, 255]    # #3b5e90
     elif population < 10000:
-        return [78, 86, 131, 255]  # #4E5683
+        return [47, 77, 119, 255]    # #2f4d77
     else:
-        return [52, 59, 90, 255]  # #343B5A
+        return [35, 60, 94, 255]     # #233c5e
+
+
 
 
 df["fill_color"] = df["population"].apply(assign_color)
@@ -83,6 +108,6 @@ def index():
     with open("index.html", "r") as h:
         return h.read()
 
-    
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, use_reloader=True, debug=True)

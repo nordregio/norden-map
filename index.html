@@ -17,6 +17,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QLTM0NW2K3"></script>
     <script>
@@ -28,8 +30,9 @@
     </script>
 
     <style>
+
      .range {
-       --range-shdw: oklch(0.51 0.08 278.8);
+       --range-shdw: oklch(0.35 0.05 259);
      }
 
      body {
@@ -52,48 +55,76 @@
        --button-size: 36px;
      }
 
-     #control-panel, #text-box, #popover-button, #popover-info {
-       font-family: Corbel, Helvetica, Arial;
+     :root {
+       --primary-blue: #1e3a5f;
+       --secondary-blue: #2c5282;
+       --accent-blue: #3182ce;
+       --light-blue: #e6f3ff;
+       --navy: #1a365d;
+       --white: #ffffff;
+       --off-white: #f8fafc;
+       --gray-50: #f9fafb;
+       --gray-100: #f3f4f6;
+       --gray-200: #e5e7eb;
+       --gray-600: #4b5563;
+       --gray-800: #1f2937;
+       --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+       --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+       --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+     }
+
+     #control-panel, #text-box, #info {
+       font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
        position: absolute;
        background: #fff;
-       left: 0;
+       right: 0;
        margin: 12px;
        padding: 4px 20px;
        z-index: 1;
-       font-size: 12px;
-       width: 220px;
+       font-size: 14px;
+       width: 620px;
        text-align: left;
        opacity: 0.8;
        margin-bottom: 1%;
        margin-top: 1%;
+       border-left: 3px solid transparent;
+       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+     }
+
+     #control-panel::before, #text-box::before, #info::before {
+       content: '';
+       position: absolute;
+       right: 0;
+       top: 0;
+       bottom: 0;
+       width: 0;
+       background: var(--accent-blue);
+       border-radius: 0 8px 8px 0;
+       transition: width 0.3s ease;
+     }
+
+     #control-panel:hover, #text-box:hover, #info:hover {
+       border-left-color: var(--accent-blue);
+       transform: translateX(-8px);
+       opacity: 1;
+     }
+
+     #control-panel:hover::before, #text-box:hover::before, #info:hover::before {
+       width: 4px;
      }
 
      #popover-button {
        bottom: 10px;
      }
-
      #text-box {
-       bottom: 50px;
+       bottom: 20px;
      }
-
+     #info {
+       top: 20%;
+     }
      #control-panel {
-       bottom: 90px;
-     }
-
-     #popover-info {
-       font-size: 10px;
-       padding: 20px;
-       width: 400px;
-     }
-
-     #logo {
-       position: absolute;
-       z-index: 1000;
-       height: auto;
-       top: 30px;
-       right: 0px;
-       transform: translate(-50%, -50%);
-       width: 200px;
+       bottom: 60px;
      }
 
      body {
@@ -106,6 +137,24 @@
   </head>
 
   <body>
+
+
+    <div id="info" class="rounded-lg shadow-md">
+      <div>
+        <p>
+
+          <strong style="font-size: 18px;">3D population map</strong>
+          <br>
+          <br>
+          The map shows the number of people residing in each 1km grid cell with the height of the bars showing how many people are residing in each cell.
+          <br>
+          <br>
+          We invite you to peruse the map as users can zoom in and out and ‘fly’ around the Nordic Region.
+          <br>
+          Get a close up of your favorite Nordic city or region. Or, play a game to see if you can name the city representing a cluster of bars in some distant Nordic region.
+        </p>
+      </div>
+    </div>
 
     <div id="control-panel" class="rounded-lg shadow-md">
       <div>
@@ -123,149 +172,118 @@
       </div>
     </div>
 
-    <button id="popover-button" data-popover-target="popover-info" data-popover-placement="right" type="button" class="rounded-lg shadow-md font-bold">Info</button>
-    <div data-popover
-         id="popover-info"
-         role="tooltip"
-         class="rounded-lg shadow-md invisible inline-block transition-opacity duration-300 bg-white border border-gray-200 opacity-0">
-      <div id="popover-text" class="px-3 py-2">
-        The map shows the number of people residing in each 1km grid cell with the height of the bars showing how many people are residing in each cell. Data source:  Nordic Statistical Institutes, 2022. <br>
-        <br>
-        We invite you to peruse the map as users can zoom in and out and ‘fly’ around the Nordic Region. Get a close up of your favorite Nordic city or region. Or, play a game to see if you can name the city representing a cluster of bars in some distant Nordic region.
-        <br>
-        <br>
-        <a href="https://nordregio.org/" class="inline-flex items-center font-medium text-black-600 dark:text-black-500 hover:underline">
-          Visit nordregio.org to learn more about the Nordic region
-          <svg class="w-4 h-4 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-          </svg>
-        </a>
-        <br>
-        <br>
-        Made by
-        <a href="https://kamiladcr.github.io/" class="inline-flex hover:underline">
-          kamiladcr
-        </a>
-        </p>
-      </div>
-    </div>
+    <script>
+     const {
+       DeckGL,
+       MapView,
+       ColumnLayer,
+       PolygonLayer,
+       CompassWidget,
+       ZoomWidget,
+       FullscreenWidget,
+     } = deck;
 
-    <div id="logo">
-      <img src="static/logo_grey.png">
-    </div>
+     const polygon_layer = new PolygonLayer({
+       id: "PolygonLayer",
+       data: "layers/polygon_layer.json",
+       pickable: false,
+       getPolygon: (d) => d,
+       filled: false,
+       getLineColor: [211, 211, 211, 255],
+       lineWidthMinPixels: 1,
+     });
 
-  <script>
-   const {
-     DeckGL,
-     MapView,
-     ColumnLayer,
-     PolygonLayer,
-     CompassWidget,
-     ZoomWidget,
-     FullscreenWidget,
-   } = deck;
+     function getTooltip({ object }) {
+       return (
+         object && {
+           html: `${object.population} <br><b>${object.munname}</b>`,
+           style: {
+             background: "white",
+             color: "black",
+             "font-family": '"Montserrat", Arial',
+             "font-size": "10px",
+           },
+         }
+       );
+     }
 
-   const polygon_layer = new PolygonLayer({
-     id: "PolygonLayer",
-     data: "layers/polygon_layer.json",
-     pickable: false,
-     getPolygon: (d) => d,
-     filled: false,
-     getLineColor: [211, 211, 211, 255],
-     lineWidthMinPixels: 1,
-   });
+     const deckgl = new DeckGL({
+       map: maplibregl,
+       mapStyle: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
+       initialViewState: {
+         bearing: 0,
+         latitude: 61,
+         longitude: 18,
+         maxZoom: 15,
+         minZoom: 4,
+         pitch: 80,
+         zoom: 5,
+       },
+       views: [
+         new MapView({
+           id: "map",
+           controller: true,
+         }),
+       ],
+       layers: [],
+       widgets: [
+         new CompassWidget({
+           id: "compass",
+           viewId: "map",
+         }),
+         new ZoomWidget({
+           id: "zoom",
+           viewId: "map",
+         }),
+         new FullscreenWidget({
+           id: "fullscreen",
+           viewId: "map",
+           placement: "top-right",
+         }),
+       ],
+       getTooltip,
+     });
 
-   function getTooltip({ object }) {
-     return (
-       object && {
-         html: `${object.population} <br><b>${object.munname}</b>`,
-         style: {
-           background: "white",
-           color: "black",
-           "font-family": '"Helvetica Neue", Arial',
-           "font-size": "10px",
-         },
-       }
-     );
-   }
+     const OPTIONS = ['elevationScale'];
 
-   const deckgl = new DeckGL({
-     map: maplibregl,
-     mapStyle: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
-     initialViewState: {
-       bearing: 0,
-       latitude: 61,
-       longitude: 8,
-       maxZoom: 15,
-       minZoom: 4,
-       pitch: 80,
-       zoom: 5,
-     },
-     views: [
-       new MapView({
-         id: "map",
-         controller: true,
-       }),
-     ],
-     layers: [],
-     widgets: [
-       new CompassWidget({
-         id: "compass",
-         viewId: "map",
-       }),
-       new ZoomWidget({
-         id: "zoom",
-         viewId: "map",
-       }),
-       new FullscreenWidget({
-         id: "fullscreen",
-         viewId: "map",
-         placement: "top-right",
-       }),
-     ],
-     getTooltip,
-   });
-
-   const OPTIONS = ['elevationScale'];
-
-   OPTIONS.forEach(key => {
-     document.getElementById(key).oninput = renderLayer;
-   });
-
-   renderLayer();
-
-   function renderLayer () {
-     const options = {};
      OPTIONS.forEach(key => {
-       const value = +document.getElementById(key).value;
-       options[key] = value;
+       document.getElementById(key).oninput = renderLayer;
      });
 
-     const column_layer = new ColumnLayer({
-       id: "ColumnLayer",
-       data: "layers/column_layer.json",
-       extruded: true,
-       radius: 500,
-       pickable: true,
-       autoHighlight: true,
-       getPosition: (d) => [d.lng, d.lat],
-       getElevation: (d) => d.population,
-       getElevationWeight: (d) => d.population,
-       getFillColor: (d) => d.fill_color,
-       highlightColor: [130, 40, 50, 255],
-       ...options
-     });
-
-     deckgl.setProps({
-       layers: [polygon_layer, column_layer]
-     });
-   };
-
-   function defaults() {
-     document.getElementById('elevationScale').value = 6;
      renderLayer();
-   };
 
-  </script>
+     function renderLayer () {
+       const options = {};
+       OPTIONS.forEach(key => {
+         const value = +document.getElementById(key).value;
+         options[key] = value;
+       });
+
+       const column_layer = new ColumnLayer({
+         id: "ColumnLayer",
+         data: "layers/column_layer.json",
+         extruded: true,
+         radius: 500,
+         pickable: true,
+         autoHighlight: true,
+         getPosition: (d) => [d.lng, d.lat],
+         getElevation: (d) => d.population,
+         getElevationWeight: (d) => d.population,
+         getFillColor: (d) => d.fill_color,
+         highlightColor: [49, 130, 206, 255],
+         ...options
+       });
+
+       deckgl.setProps({
+         layers: [polygon_layer, column_layer]
+       });
+     };
+
+     function defaults() {
+       document.getElementById('elevationScale').value = 6;
+       renderLayer();
+     };
+
+    </script>
 
 </html>
