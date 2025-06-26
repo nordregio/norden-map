@@ -82,12 +82,12 @@
        margin: 12px;
        padding: 4px 20px;
        z-index: 1;
-       font-size: 14px;
-       width: 620px;
+       font-size: 12px;
+       width: 24%;
        text-align: left;
        opacity: 0.8;
        margin-bottom: 1%;
-       margin-top: 1%;
+       /* margin-top: 1%; */
        border-left: 3px solid transparent;
        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
      }
@@ -121,7 +121,7 @@
        bottom: 20px;
      }
      #info {
-       top: 20%;
+       top: 0px;
      }
      #control-panel {
        bottom: 60px;
@@ -142,9 +142,9 @@
     <div id="info" class="rounded-lg shadow-md">
       <div>
         <p>
+          <br>
 
           <strong style="font-size: 18px;">3D population map</strong>
-          <br>
           <br>
           The map shows the number of people residing in each 1km grid cell with the height of the bars showing how many people are residing in each cell.
           <br>
@@ -152,6 +152,27 @@
           We invite you to peruse the map as users can zoom in and out and ‘fly’ around the Nordic Region.
           <br>
           Get a close up of your favorite Nordic city or region. Or, play a game to see if you can name the city representing a cluster of bars in some distant Nordic region.
+          <br>
+          <br>
+
+          <strong style="font-size: 14px;">Why the contrast in population density?</strong>
+          <br>
+          Nearly all countries have an uneven distribution of their populations across their territories, but the Nordic populations are more clustered than in most other nations. This phenomenon is due to the location and physical geography of the Nordic region, with Norway, Sweden, and Finland having territory extending above the Arctic Circle.
+          <br>
+          <br>
+
+          As the map illustrates, much of the population is concentrated in the southern parts of Norway, Sweden, and Finland. The capital cities of Oslo, Stockholm, and Helsinki are clearly visible, along with other large cities such as Malmö and Gothenburg. In the northern regions of these countries, populations are concentrated along the coasts of either the Gulf of Bothnia or the North Sea. The inland areas of the northern regions are notably sparsely populated.
+          <br>
+          <br>
+
+          Denmark (6.0 million) has only a slightly larger population than Norway (5.6 million) and Finland (5.6 million), but it is much smaller in size, making it far more densely populated than the other Nordic countries. Denmark does not have the vast stretches of empty land seen in the other countries, but its population is still highly concentrated in and around the capital, Copenhagen.
+          <br>
+          <br>
+
+          Iceland is perhaps the most extreme example of population concentration, with two-thirds of the population living in or near the capital, Reykjavik. The second largest city, Akureyri, is also quite prominent on the map, as are a few other settlements. However, the map vividly illustrates the emptiness of much of the island.
+          <br>
+          <br>
+
         </p>
       </div>
     </div>
@@ -180,7 +201,7 @@
        PolygonLayer,
        CompassWidget,
        ZoomWidget,
-       FullscreenWidget,
+       /* FullscreenWidget, */
      } = deck;
 
      const polygon_layer = new PolygonLayer({
@@ -212,8 +233,8 @@
        mapStyle: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
        initialViewState: {
          bearing: 0,
-         latitude: 61,
-         longitude: 18,
+         latitude: 63,
+         longitude: 23,
          maxZoom: 15,
          minZoom: 4,
          pitch: 80,
@@ -235,11 +256,11 @@
            id: "zoom",
            viewId: "map",
          }),
-         new FullscreenWidget({
-           id: "fullscreen",
-           viewId: "map",
-           placement: "top-right",
-         }),
+         /* new FullscreenWidget({
+          *   id: "fullscreen",
+          *   viewId: "map",
+          *   placement: "top-right",
+          * }), */
        ],
        getTooltip,
      });
