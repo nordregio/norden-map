@@ -80,7 +80,7 @@
        background: #fff;
        right: 0;
        margin: 12px;
-       padding: 4px 20px;
+       padding: 10px 20px;
        z-index: 1;
        font-size: 12px;
        width: 24%;
@@ -104,6 +104,16 @@
        transition: width 0.3s ease;
      }
 
+     #control-panel, #text-box, #info {
+       border-left-color: var(--accent-blue);
+       transform: translateX(-8px);
+       opacity: 1;
+     }
+
+     #control-panel::before, #text-box::before, #info::before {
+       width: 4px;
+     }
+
      #control-panel:hover, #text-box:hover, #info:hover {
        border-left-color: var(--accent-blue);
        transform: translateX(-8px);
@@ -114,18 +124,18 @@
        width: 4px;
      }
 
-     #popover-button {
-       bottom: 10px;
-     }
      #text-box {
        bottom: 20px;
      }
+
      #info {
        top: 0px;
      }
+
      #control-panel {
-       bottom: 60px;
+       bottom: 80px;
      }
+
 
      body {
        overflow: hidden;
