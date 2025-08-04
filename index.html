@@ -39,6 +39,8 @@
        width: 100vw;
        height: 100vh;
        margin: 0;
+       overflow: hidden;
+       filter: drop-shadow(0 0 10px white);
      }
 
      #deck-container {
@@ -74,72 +76,194 @@
        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
      }
 
-     #control-panel, #text-box, #info {
-       font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+     #panels-container {
        position: absolute;
-       background: #fff;
-       right: 0;
-       margin: 12px;
-       padding: 10px 20px;
+       top: 12px;
+       right: 12px;
+       bottom: 12px;
+       width: min(300px, 30vw);
        z-index: 1;
-       font-size: 12px;
-       width: 24%;
-       text-align: left;
-       opacity: 0.8;
-       margin-bottom: 1%;
-       /* margin-top: 1%; */
-       border-left: 3px solid transparent;
-       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+       display: flex;
+       flex-direction: column;
+       gap: 8px;
+       pointer-events: none;
+       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
      }
 
-     #control-panel::before, #text-box::before, #info::before {
-       content: '';
+     #panels-container.hidden {
+       transform: translateX(calc(100% + 12px));
+     }
+
+     #toggle-button {
        position: absolute;
-       right: 0;
-       top: 0;
-       bottom: 0;
-       width: 0;
-       background: var(--accent-blue);
-       border-radius: 0 8px 8px 0;
-       transition: width 0.3s ease;
+       top: 12px;
+       right: 12px;
+       min-width: 52px;
+       height: 40px;
+       padding: 0 12px;
+       background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95));
+       border: 1px solid rgba(49, 130, 206, 0.2);
+       border-radius: 20px;
+       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+       cursor: pointer;
+       z-index: 2;
+       display: none;
+       align-items: center;
+       justify-content: center;
+       gap: 6px;
+       font-family: "Montserrat", sans-serif;
+       font-size: 11px;
+       font-weight: 600;
+       color: var(--accent-blue);
+       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+       pointer-events: auto;
+       backdrop-filter: blur(8px);
+       text-transform: uppercase;
+       letter-spacing: 0.5px;
      }
 
-     #control-panel, #text-box, #info {
-       border-left-color: var(--accent-blue);
-       transform: translateX(-8px);
-       opacity: 1;
+     #toggle-button:hover {
+       background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(248, 250, 252, 1));
+       box-shadow: 0 8px 25px rgba(49, 130, 206, 0.25);
+       transform: translateY(-2px);
+       border-color: rgba(49, 130, 206, 0.4);
      }
 
-     #control-panel::before, #text-box::before, #info::before {
-       width: 4px;
+     #toggle-button.panels-hidden {
+       display: flex;
+       background: linear-gradient(135deg, #385988, #2c4b73);
+       color: white;
+       border-color: rgba(255, 255, 255, 0.3);
+       box-shadow: 0 4px 12px rgba(56, 89, 136, 0.4);
      }
 
-     #control-panel:hover, #text-box:hover, #info:hover {
-       border-left-color: var(--accent-blue);
-       transform: translateX(-8px);
-       opacity: 1;
+     #toggle-button.panels-hidden:hover {
+       background: linear-gradient(135deg, #2c4b73, #1f3a5f);
+       box-shadow: 0 8px 25px rgba(56, 89, 136, 0.5);
+       transform: translateY(-2px);
      }
 
-     #control-panel:hover::before, #text-box:hover::before, #info:hover::before {
-       width: 4px;
+     .button-icon {
+       font-size: 14px;
+       transition: transform 0.3s ease;
      }
 
-     #text-box {
-       bottom: 20px;
+     .button-text {
+       font-size: 10px;
+       margin-left: 2px;
+     }
+
+     #toggle-button:hover .button-icon {
+       transform: scale(1.1);
+     }
+
+     .panel-hide-button {
+       position: absolute;
+       top: 8px;
+       right: 12px;
+       background: none;
+       border: none;
+       font-family: "Montserrat", sans-serif;
+       font-size: 10px;
+       font-weight: 600;
+       color: rgba(49, 130, 206, 0.7);
+       cursor: pointer;
+       padding: 4px 8px;
+       border-radius: 4px;
+       transition: all 0.2s ease;
+       text-transform: uppercase;
+       letter-spacing: 0.5px;
+     }
+
+     .panel-hide-button:hover {
+       background: rgba(49, 130, 206, 0.1);
+       color: var(--accent-blue);
+       transform: translateX(2px);
      }
 
      #info {
-       top: 0px;
+       position: relative;
+       padding-top: 28px;
+     }
+
+     .panel {
+       font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+       background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.9));
+       backdrop-filter: blur(12px);
+       border: 1px solid rgba(49, 130, 206, 0.15);
+       padding: 8px 12px;
+       font-size: 10px;
+       text-align: left;
+       opacity: 0.95;
+       border-left: 4px solid var(--accent-blue);
+       border-radius: 12px;
+       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+       transform: translateX(-4px);
+       pointer-events: auto;
+     }
+
+     .panel:hover {
+       opacity: 1;
+       transform: translateX(-8px);
+       box-shadow: 0 12px 40px rgba(49, 130, 206, 0.15);
+       background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(248, 250, 252, 0.95));
+       border-color: rgba(49, 130, 206, 0.25);
+     }
+
+     #info {
+       flex: 1;
+       overflow-y: auto;
+       min-height: 0;
      }
 
      #control-panel {
-       bottom: 80px;
+       flex-shrink: 0;
      }
 
+     #text-box {
+       flex-shrink: 0;
+     }
 
-     body {
-       overflow: hidden;
-       filter: drop-shadow(0 0 10px white);
+     @media (max-width: 1024px) {
+       #panels-container {
+         width: min(280px, 35vw);
+       }
+
+       .panel {
+         font-size: 9px;
+         padding: 6px 10px;
+       }
+
+       #info strong {
+         font-size: 12px !important;
+       }
+     }
+
+     @media (max-width: 768px) {
+       #panels-container {
+         width: min(260px, 40vw);
+         gap: 6px;
+       }
+
+       .panel {
+         font-size: 8px;
+         padding: 5px 8px;
+       }
+
+       #info strong {
+         font-size: 10px !important;
+       }
+
+       #info strong:first-child {
+         font-size: 12px !important;
+       }
+     }
+
+     @media (max-width: 640px) {
+       #panels-container {
+         width: min(240px, 45vw);
+       }
      }
 
     </style>
@@ -148,58 +272,64 @@
 
   <body>
 
+    <button id="toggle-button" onclick="togglePanels()">
+      <span class="button-text">SHOW INFO</span>
+    </button>
 
-    <div id="info" class="rounded-lg shadow-md">
-      <div>
-        <p>
-          <br>
+    <div id="panels-container">
+      <div id="info" class="panel">
+        <button class="panel-hide-button" onclick="togglePanels()">HIDE →</button>
+        <div>
+          <p>
+            <br>
 
-          <strong style="font-size: 18px;">3D population map</strong>
-          <br>
-          The map shows the number of people residing in each 1km grid cell with the height of the bars showing how many people are residing in each cell.
-          <br>
-          <br>
-          We invite you to peruse the map as users can zoom in and out and ‘fly’ around the Nordic Region.
-          <br>
-          Get a close up of your favorite Nordic city or region. Or, play a game to see if you can name the city representing a cluster of bars in some distant Nordic region.
-          <br>
-          <br>
+            <strong style="font-size: 14px;">3D population map</strong>
+            <br>
+            The map shows the number of people residing in each 1km grid cell with the height of the bars showing how many people are residing in each cell.
+            <br>
+            <br>
+            We invite you to peruse the map as users can zoom in and out and 'fly' around the Nordic Region.
+            <br>
+            Get a close up of your favorite Nordic city or region. Or, play a game to see if you can name the city representing a cluster of bars in some distant Nordic region.
+            <br>
+            <br>
 
-          <strong style="font-size: 14px;">Why the contrast in population density?</strong>
-          <br>
-          Nearly all countries have an uneven distribution of their populations across their territories, but the Nordic populations are more clustered than in most other nations. This phenomenon is due to the location and physical geography of the Nordic region, with Norway, Sweden, and Finland having territory extending above the Arctic Circle.
-          <br>
-          <br>
+            <strong style="font-size: 11px;">Why the contrast in population density?</strong>
+            <br>
+            Nearly all countries have an uneven distribution of their populations across their territories, but the Nordic populations are more clustered than in most other nations. This phenomenon is due to the location and physical geography of the Nordic region, with Norway, Sweden, and Finland having territory extending above the Arctic Circle.
+            <br>
+            <br>
 
-          As the map illustrates, much of the population is concentrated in the southern parts of Norway, Sweden, and Finland. The capital cities of Oslo, Stockholm, and Helsinki are clearly visible, along with other large cities such as Malmö and Gothenburg. In the northern regions of these countries, populations are concentrated along the coasts of either the Gulf of Bothnia or the North Sea. The inland areas of the northern regions are notably sparsely populated.
-          <br>
-          <br>
+            As the map illustrates, much of the population is concentrated in the southern parts of Norway, Sweden, and Finland. The capital cities of Oslo, Stockholm, and Helsinki are clearly visible, along with other large cities such as Malmö and Gothenburg. In the northern regions of these countries, populations are concentrated along the coasts of either the Gulf of Bothnia or the North Sea. The inland areas of the northern regions are notably sparsely populated.
+            <br>
+            <br>
 
-          Denmark (6.0 million) has only a slightly larger population than Norway (5.6 million) and Finland (5.6 million), but it is much smaller in size, making it far more densely populated than the other Nordic countries. Denmark does not have the vast stretches of empty land seen in the other countries, but its population is still highly concentrated in and around the capital, Copenhagen.
-          <br>
-          <br>
+            Denmark (6.0 million) has only a slightly larger population than Norway (5.6 million) and Finland (5.6 million), but it is much smaller in size, making it far more densely populated than the other Nordic countries. Denmark does not have the vast stretches of empty land seen in the other countries, but its population is still highly concentrated in and around the capital, Copenhagen.
+            <br>
+            <br>
 
-          Iceland is perhaps the most extreme example of population concentration, with two-thirds of the population living in or near the capital, Reykjavik. The second largest city, Akureyri, is also quite prominent on the map, as are a few other settlements. However, the map vividly illustrates the emptiness of much of the island.
-          <br>
-          <br>
+            Iceland is perhaps the most extreme example of population concentration, with two-thirds of the population living in or near the capital, Reykjavik. The second largest city, Akureyri, is also quite prominent on the map, as are a few other settlements. However, the map vividly illustrates the emptiness of much of the island.
+            <br>
+            <br>
 
-        </p>
+          </p>
+        </div>
       </div>
-    </div>
 
-    <div id="control-panel" class="rounded-lg shadow-md">
-      <div>
-        <label class="font-bold" onclick="defaults()">Tune elevation scale</label>
-        <input id="elevationScale" type="range" min="1" max="40" step="1" value="6" class="range range-xs"></input>
-        <label class="font-normal" onclick="defaults()">Reset</label>
+      <div id="control-panel" class="panel">
+        <div>
+          <label class="font-bold" onclick="defaults()">Tune elevation scale</label>
+          <input id="elevationScale" type="range" min="1" max="40" step="1" value="6" class="range range-xs"></input>
+          <label class="font-normal" onclick="defaults()">Reset</label>
+        </div>
       </div>
-    </div>
 
-    <div id="text-box" class="rounded-lg shadow-md font-bold">
-      <div>
-        <p>
-          Hold <kbd class="kbd kbd-xs">CNTR</kbd> to rotate the map
-        </p>
+      <div id="text-box" class="panel font-bold">
+        <div>
+          <p>
+            Hold <kbd class="kbd kbd-xs">CNTR</kbd> to rotate the map
+          </p>
+        </div>
       </div>
     </div>
 
@@ -313,6 +443,19 @@
      function defaults() {
        document.getElementById('elevationScale').value = 6;
        renderLayer();
+     };
+
+     function togglePanels() {
+       const container = document.getElementById('panels-container');
+       const button = document.getElementById('toggle-button');
+
+       if (container.classList.contains('hidden')) {
+         container.classList.remove('hidden');
+         button.classList.remove('panels-hidden');
+       } else {
+         container.classList.add('hidden');
+         button.classList.add('panels-hidden');
+       }
      };
 
     </script>
